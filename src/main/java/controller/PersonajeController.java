@@ -52,38 +52,6 @@ public class PersonajeController {
    */
   public List<Armas> readArticlesFile(String articlesFile, String magazinesFile, String authorsFile)
       throws IOException {
-    int PersonajeID, ArmaID, Regionid, Numerodeestrellas;
-    String NombrePersonaje, TipodeArma, Elemento, Sexo;
-
-
-
-
-    BufferedReader br = new BufferedReader(new FileReader(articlesFile));
-    String linea = "";
-
-    List<Armas> magazinesList = magazineController.readMagazinesFile(magazinesFile);
-    List<Region> authorList = authorController.readAuthorsFile(authorsFile);
-
-    while ((linea = br.readLine()) != null) {
-      StringTokenizer str = new StringTokenizer(linea, ",");
-      PersonajeID = Integer.parseInt(str.nextToken());
-      ArmaID = Integer.parseInt(str.nextToken());
-      Regionid = Integer.parseInt(str.nextToken());
-      NombrePersonaje = str.nextToken();
-      Numerodeestrellas = Integer.parseInt(str.nextToken());
-      TipodeArma = str.nextToken();
-      Elemento = str.nextToken();
-      Sexo = str.nextToken();
-
-
-        magazinesList.get(ArmaID - 1).addPersonaje(new Personaje(PersonajeID, NombrePersonaje, Numerodeestrellas, TipodeArma, Elemento , Sexo, authorList.get(Regionid - 1)));
-
-    br.close();
-
-    return magazinesList;
-  }
-
-  public List<Personaje>  readArticlesFile(String articlesFile, String authorsFile) throws IOException {
     int articleId, magazineId, authorId;
     String title;
     Date creationDate;
@@ -97,21 +65,48 @@ public class PersonajeController {
 
     while ((linea = br.readLine()) != null) {
       StringTokenizer str = new StringTokenizer(linea, ",");
-      articleId = Integer.parseInt(str.nextToken());
-      magazineId = Integer.parseInt(str.nextToken());
-      authorId = Integer.parseInt(str.nextToken());
+      PersonajeID = Integer.parseInt(str.nextToken());
+      ArmaID = Integer.parseInt(str.nextToken());
+      Regionid = Integer.parseInt(str.nextToken());
       title = str.nextToken();
 
-      try {
-        creationDate = dateFormat.parse(str.nextToken());
-        publishable = Boolean.parseBoolean(str.nextToken());
 
-        articlesList.add(new Personaje(articleId, title, creationDate, publishable, authorList.get(authorId - 1)));
+      articlesList.add(new Personaje(articleId, title, creationDate, publishable, authorList.get(authorId - 1)));
 
-      } catch (ParseException e) {
 
-        e.printStackTrace();
-      }
+    br.close();
+
+    return magazinesList;
+  }
+
+  public List<Personaje>  readArticlesFile(String articlesFile, String authorsFile) throws IOException {
+
+      int PersonajeID, ArmaID, Regionid, Numerodeestrellas;
+      String NombrePersonaje, TipodeArma, Elemento, Sexo;
+
+
+
+
+      BufferedReader br2 = new BufferedReader(new FileReader(articlesFile));
+      String linea2 = "";
+
+      List<Armas> magazinesList = magazineController.readMagazinesFile(magazinesFile);
+      List<Region> authorList = authorController.readAuthorsFile(authorsFile);
+
+      while ((linea2 = br2.readLine()) != null) {
+        StringTokenizer str = new StringTokenizer(linea, ",");
+        PersonajeID = Integer.parseInt(str.nextToken());
+        ArmaID = Integer.parseInt(str.nextToken());
+        Regionid = Integer.parseInt(str.nextToken());
+        NombrePersonaje = str.nextToken();
+        Numerodeestrellas = Integer.parseInt(str.nextToken());
+        TipodeArma = str.nextToken();
+        Elemento = str.nextToken();
+        Sexo = str.nextToken();
+
+
+
+        magazinesList.get(ArmaID - 1).addPersonaje(new Personaje(PersonajeID, NombrePersonaje, Numerodeestrellas, TipodeArma, Elemento , Sexo, authorList.get(Regionid - 1)));
 
     }
     br.close();
