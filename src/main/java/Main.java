@@ -98,8 +98,8 @@ public class Main {
           // magazineController.printMagazines();
 
           List<Region> regions = authorController.readAuthorsFile("src/main/resources/Regiónes.csv");
-          List<Personaje> personajes = articleController.readArticlesFile("src/main/resources/personajes.csv", "src/main/resources/Armas.csv", "src/main/resources/Regiónes.csv");
-          List<Armas> armas = magazineController.readMagazinesFile("src/main/resources/personajes.csv");
+          List<Personaje> personajes = articleController.readArticlesFile("src/main/resources/personajes.csv", "src/main/resources/Regiónes.csv", "src/main/resources/Armas.csv");
+          List<Armas> armas = magazineController.readMagazinesFile("src/main/resources/Armas.csv");
 
           System.out.println("Revistes llegides des del fitxer");
           for (int i = 0; i < armas.size(); i++) {
