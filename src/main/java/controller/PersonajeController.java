@@ -23,6 +23,7 @@ public class PersonajeController {
 
   private ArmasController magazineController = new ArmasController(connection);
   private RegionController authorController = new RegionController(connection);
+  private List<model.Personaje> Personaje;
 
   public PersonajeController(Connection connection) {
     this.connection = connection;
@@ -50,36 +51,8 @@ public class PersonajeController {
    *                     llistaRevistes
    *                     .getRevista(i).getArticle(j).getAutor()<>nil</br>
    */
-  public List<Armas> readArticlesFile(String articlesFile, String magazinesFile, String authorsFile)
-      throws IOException {
-    int articleId, magazineId, authorId;
-    String title;
-    Date creationDate;
-    boolean publishable;
-    DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD");
 
-    BufferedReader br = new BufferedReader(new FileReader(articlesFile));
-    String linea = "";
-    List<Region> authorList = authorController.readAuthorsFile(authorsFile);
-    List<Personaje> articlesList = new ArrayList<Personaje>();
-
-    while ((linea = br.readLine()) != null) {
-      StringTokenizer str = new StringTokenizer(linea, ",");
-      PersonajeID = Integer.parseInt(str.nextToken());
-      ArmaID = Integer.parseInt(str.nextToken());
-      Regionid = Integer.parseInt(str.nextToken());
-      title = str.nextToken();
-
-
-      articlesList.add(new Personaje(articleId, title, creationDate, publishable, authorList.get(authorId - 1)));
-
-
-    br.close();
-
-    return magazinesList;
-  }
-
-  public List<Personaje>  readArticlesFile(String articlesFile, String authorsFile) throws IOException {
+  public List<Personaje>  readArticlesFile(String articlesFile, String authorsFile, String magazinesFile) throws IOException {
 
       int PersonajeID, ArmaID, Regionid, Numerodeestrellas;
       String NombrePersonaje, TipodeArma, Elemento, Sexo;
@@ -94,7 +67,7 @@ public class PersonajeController {
       List<Region> authorList = authorController.readAuthorsFile(authorsFile);
 
       while ((linea2 = br2.readLine()) != null) {
-        StringTokenizer str = new StringTokenizer(linea, ",");
+        StringTokenizer str = new StringTokenizer(linea2, ",");
         PersonajeID = Integer.parseInt(str.nextToken());
         ArmaID = Integer.parseInt(str.nextToken());
         Regionid = Integer.parseInt(str.nextToken());
@@ -109,9 +82,8 @@ public class PersonajeController {
         magazinesList.get(ArmaID - 1).addPersonaje(new Personaje(PersonajeID, NombrePersonaje, Numerodeestrellas, TipodeArma, Elemento , Sexo, authorList.get(Regionid - 1)));
 
     }
-    br.close();
-    return articlesList;
-
+    br2.close();
+   return Personaje;
   }
 
   /* Method to CREATE an Article in the database */

@@ -31,8 +31,8 @@ public class Personaje implements Serializable {
     super();
     this.PersonajeID = PersonajeID;
     this.NombrePersonaje = NombrePersonaje;
-    this.Numerodeestrellas = Numerodeestrellas;
-    this.TipodeArma = TipodeArma;
+    this.Numerodeestrellas = Integer.parseInt(Numerodeestrellas);
+    this.TipodeArma = String.valueOf(TipodeArma);
     this.Elemento = Elemento;
     this.Sexo = Sexo;
     this.region = region;
