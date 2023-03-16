@@ -78,8 +78,7 @@ public class Main {
     PersonajeController personajesController = new PersonajeController(c, entityManagerFactory);
 
     Menu menu = new Menu();
-    int opcio;
-    opcio = menu.mainMenu();
+    int opcio = menu.mainMenu();
 
     switch (opcio) {
 

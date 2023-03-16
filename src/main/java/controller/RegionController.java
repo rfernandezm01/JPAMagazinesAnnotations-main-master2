@@ -36,9 +36,9 @@ public class RegionController {
     String linea = "";
     while ((linea = br.readLine()) != null) {
       StringTokenizer str = new StringTokenizer(linea, ",");
-      Regionid = parseInt(str.nextToken());
+      Regionid = Integer.parseInt(str.nextToken());
       Nomregion = str.nextToken();
-      Habitantes = parseInt(str.nextToken());
+      Habitantes = Integer.parseInt(str.nextToken());
       Elemento = str.nextToken();
       Nombrearconte = str.nextToken();
       Mundo = str.nextToken();

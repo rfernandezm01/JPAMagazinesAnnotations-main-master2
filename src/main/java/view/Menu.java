@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import static java.lang.Integer.parseInt;
+
 public class Menu {
     private int option;
 
@@ -33,7 +35,7 @@ public class Menu {
 
             System.out.println("Esculli opció: ");
             try {
-                option = Integer.parseInt(br.readLine());
+                option = parseInt(br.readLine());
             } catch (NumberFormatException | IOException e) {
                 System.out.println("valor no vàlid");
                 e.printStackTrace();
