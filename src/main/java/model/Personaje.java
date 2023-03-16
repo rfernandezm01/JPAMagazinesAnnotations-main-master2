@@ -2,12 +2,12 @@ package model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "Personaje")
-public class Personaje implements Serializable {
+public class Personaje implements Serializable{
   @Id
   @Column(name = "PersonajeID")
   int PersonajeID;
@@ -22,12 +22,8 @@ public class Personaje implements Serializable {
   @Column(name = "Sexo", length = 20)
   String Sexo;
 
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinColumn(name = "RegionID")
-  public Region region;
-
   public Personaje(int PersonajeID, String NombrePersonaje, int TipodeArma,
-                   String Elemento, String Numerodeestrellas, String Sexo , Region region) {
+                   String Elemento, String Numerodeestrellas, String Sexo) {
     super();
     this.PersonajeID = PersonajeID;
     this.NombrePersonaje = NombrePersonaje;
@@ -35,8 +31,11 @@ public class Personaje implements Serializable {
     this.TipodeArma = String.valueOf(TipodeArma);
     this.Elemento = Elemento;
     this.Sexo = Sexo;
-    this.region = region;
   }
+
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(name = "RegionID")
+  Region region;
 
   public Personaje(int articleId, String title, Date creationDate, boolean publishable, Region region) {
     super();
@@ -51,7 +50,9 @@ public class Personaje implements Serializable {
     this.PersonajeID = personajeID;
   }
 
-  public String getNombrePersonaje() {return NombrePersonaje;}
+  public String getNombrePersonaje() {
+    return NombrePersonaje;
+  }
 
   public void setNombrePersonaje(String nombrepersonaje) {
     this.NombrePersonaje = nombrepersonaje;
@@ -85,26 +86,32 @@ public class Personaje implements Serializable {
     return Sexo;
   }
 
-  public void setSexo(String sexo) {this.Sexo = sexo;}
+  public void setSexo(String sexo) {
+    this.Sexo = sexo;
+  }
 
   public Region getRegion() {
     return region;
   }
 
-  public void setRegion(Region region) {
-    this.region = region;
-  }
+  //public List<Personaje> getArticles() {
+  //return articles;
+  //}
 
+  public void setRegion(Region regions) {
+    this.region = regions;
+  }
   @Override
   public String toString() {
     return "Personaje{" +
-        "PersonajeID=" + PersonajeID +
-        ", Nombre='" + NombrePersonaje + '\'' +
+            "PersonajeID=" + PersonajeID +
+            ", Nombre='" + NombrePersonaje + '\'' +
             ", Numerodeestrellas=" + Numerodeestrellas +
-        ", TipodeArma=" + TipodeArma +
-        ", Elemento=" + Elemento +
-        ", Sexo=" + Sexo +
-        ", Region=" + region.toString() +
-        '}';
+            ", TipodeArma=" + TipodeArma +
+            ", Elemento=" + Elemento +
+            ", Sexo=" + Sexo +
+            ", Region=" + region.toString() +
+            '}';
   }
+
 }

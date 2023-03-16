@@ -147,6 +147,9 @@ public class Main {
             armasController.addArma(armas.get(i));
           }
 
+          //Esto es una prueba
+
+
 /*
           for (Magazine m : magazines) {
             System.out.println(m);
