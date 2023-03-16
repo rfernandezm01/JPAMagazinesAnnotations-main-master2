@@ -8,8 +8,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 //Maginaze
@@ -18,9 +16,7 @@ public class ArmasController {
   private Connection connection;
   private EntityManagerFactory entityManagerFactory;
 
-  public ArmasController(Connection connection) {
-    this.connection = connection;
-  }
+  public ArmasController(Connection connection) {this.connection = connection;}
 
   public ArmasController(Connection connection, EntityManagerFactory entityManagerFactory) {
     this.connection = connection;
@@ -28,86 +24,89 @@ public class ArmasController {
   }
 
   /**
-   * @param filename Aquest String correspon amb l'arxiu on s'emmagatzemen les
+   * @param filearmas Aquest String correspon amb l'arxiu on s'emmagatzemen les
    *                 dades de les instancies de Revista
    * @throws IOException <dt><b>Preconditions:</b>
    *                     <dd>
-   *                     filename<>nil </br> llistaRevistes == nil
+   *                     filearmas<>nil </br> llistaRevistes == nil
    *                     <dt><b>Postconditions:</b>
    *                     <dd>
    *                     llistaRevistes<>nil
    */
 
-  public List<Armas> readMagazinesFile(String filename) throws IOException {
-    int magazineId;
-    String title;
-    String publicationDate;
-    DateFormat dateFormat = new SimpleDateFormat("Reflejo de las Tinieblas");
-    List<Armas> magazinesList = new ArrayList();
+  public List<Armas> readArmasFile(String filearmas) throws IOException {
+    int ArmaID;
+    String NombreArma;
+    String TipodeArmas;
+    int NumerodeestrellasArma;
+    int PuntosAtaque;
+    List<Armas> armasList = new ArrayList();
 
-    BufferedReader br = new BufferedReader(new FileReader(filename));
+    BufferedReader br = new BufferedReader(new FileReader(filearmas));
     String linea = "";
     while ((linea = br.readLine()) != null) {
       StringTokenizer str = new StringTokenizer(linea, ",");
-      magazineId = Integer.parseInt(str.nextToken());
-      title = str.nextToken();
-      publicationDate = str.nextToken();
+      ArmaID = Integer.parseInt(str.nextToken());
+      NombreArma = str.nextToken();
+      TipodeArmas = str.nextToken();
+      NumerodeestrellasArma = Integer.parseInt(str.nextToken());
+      PuntosAtaque = Integer.parseInt(str.nextToken());
 
-      magazinesList.add(new Armas(magazineId, title, publicationDate));
+      armasList.add(new Armas(ArmaID, NombreArma, TipodeArmas, NumerodeestrellasArma, PuntosAtaque));
 
     }
     br.close();
-    return magazinesList;
+    return armasList;
   }
 
-  public void printMagazines(ArrayList<Armas> magazinesList) {
-    for (int i = 0; i < magazinesList.size(); i++) {
-      System.out.println(magazinesList.get(i).toString());
+  public void printArmas(ArrayList<Armas> arrayList) {
+    for (int i = 0; i < arrayList.size(); i++) {
+      System.out.println(arrayList.get(i).toString());
     }
   }
 
   /* Method to CREATE a Magazine  in the database */
-  public void addMagazine(Armas magazine) {
+  public void addArma(Armas armas) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    em.merge(magazine);
+    em.merge(armas);
 
     em.getTransaction().commit();
     em.close();
   }
 
   /* Method to READ all Magazines */
-  public void listMagazines() {
+  public void listArmas() {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    List<Armas> result = em.createQuery("from Magazine", Armas.class)
+    List<Armas> result = em.createQuery("from Armas", Armas.class)
         .getResultList();
 
 
 
-    for (Armas magazine : result) {
-      System.out.println(magazine.toString());
+    for (Armas armas : result) {
+      System.out.println(armas.toString());
     }
     em.getTransaction().commit();
     em.close();
   }
 
   /* Method to UPDATE activity for an Magazine */
-  public void updateMagazine(Integer magazineId) {
+  public void updateArmas(Integer armasId) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    Armas magazine = (Armas) em.find(Armas.class, magazineId);
-    em.merge(magazine);
+    Armas armas = (Armas) em.find(Armas.class, armasId);
+    em.merge(armas);
     em.getTransaction().commit();
     em.close();
   }
 
   /* Method to DELETE an Magazine from the records */
-  public void deleteAutor(Integer magazineId) {
+  public void deleteArma(Integer armasId) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    Armas magazine = (Armas) em.find(Armas.class, magazineId);
-    em.remove(magazine);
+    Armas armas = (Armas) em.find(Armas.class, armasId);
+    em.remove(armas);
     em.getTransaction().commit();
     em.close();
   }

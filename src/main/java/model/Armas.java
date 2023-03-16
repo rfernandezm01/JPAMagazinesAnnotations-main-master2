@@ -21,7 +21,7 @@ public class Armas implements Serializable {
   @Column(name = "PuntosAtaque")
   private int PuntosAtaque;
 
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "ArmaID", referencedColumnName = "ArmaID")
   public Personaje personaje;
 

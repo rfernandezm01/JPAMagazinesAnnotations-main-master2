@@ -18,8 +18,8 @@ public class Menu {
 
             System.out.println(" \nMENU PRINCIPAL \n");
 
-            System.out.println("1. Borrar todas las Tablas ");
-            System.out.println("2. Crear todas las Tablas ");
+            System.out.println("1. Añadir todas las Tablas ");
+            System.out.println("2. Borrar todas las Tablas ");
             System.out.println("3. Repoblar todas las Tablas ");
             System.out.println("4. Todos los elementos que contegan un texto concreto.");
             System.out.println("5. Todos los elementos que cumplan con una condicion. ");

@@ -43,7 +43,7 @@ public class Personaje implements Serializable {
 
   }
 
-  public int getPersonajeID(int i) {
+  public int getPersonajeID() {
     return PersonajeID;
   }
 

@@ -11,9 +11,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 public class PersonajeController {
   //Article
@@ -21,13 +18,11 @@ public class PersonajeController {
   private Connection connection;
   private EntityManagerFactory entityManagerFactory;
 
-  private ArmasController magazineController = new ArmasController(connection);
-  private RegionController authorController = new RegionController(connection);
+  private ArmasController armasController = new ArmasController(connection);
+  private RegionController regionController = new RegionController(connection);
   private List<model.Personaje> Personaje;
 
-  public PersonajeController(Connection connection) {
-    this.connection = connection;
-  }
+  public PersonajeController(Connection connection) {this.connection = connection;}
 
   public PersonajeController(Connection connection, EntityManagerFactory entityManagerFactory) {
     this.connection = connection;
@@ -35,7 +30,7 @@ public class PersonajeController {
   }
 
   /**
-   * @param articlesFile Aquest String correspon amb l'arxiu on s'emmagatzemen les
+   * @param personajesFile Aquest String correspon amb l'arxiu on s'emmagatzemen les
    *                     dades de les isntancies de Revista
    * @return ArrayList d'objectes Revista, amb els seus articles i la
    * informació de l'autor
@@ -52,7 +47,7 @@ public class PersonajeController {
    *                     .getRevista(i).getArticle(j).getAutor()<>nil</br>
    */
 
-  public List<Personaje>  readArticlesFile(String articlesFile, String authorsFile, String magazinesFile) throws IOException {
+  public List<Personaje> readPersonajesFile(String personajesFile, String regionesFile, String armasFile) throws IOException {
 
       int PersonajeID, ArmaID, Regionid, Numerodeestrellas;
       String NombrePersonaje, TipodeArma, Elemento, Sexo;
@@ -60,11 +55,11 @@ public class PersonajeController {
 
 
 
-      BufferedReader br2 = new BufferedReader(new FileReader(articlesFile));
+      BufferedReader br2 = new BufferedReader(new FileReader(personajesFile));
       String linea2 = "";
 
-      List<Armas> magazinesList = magazineController.readMagazinesFile(magazinesFile);
-      List<Region> authorList = authorController.readAuthorsFile(authorsFile);
+      List<Armas> armasList = armasController.readArmasFile(armasFile);
+      List<Region> regionList = regionController.readRegionesFile(regionesFile);
 
       while ((linea2 = br2.readLine()) != null) {
         StringTokenizer str = new StringTokenizer(linea2, ",");
@@ -79,7 +74,7 @@ public class PersonajeController {
 
 
 
-        magazinesList.get(ArmaID - 1).addPersonaje(new Personaje(PersonajeID, NombrePersonaje, Numerodeestrellas, TipodeArma, Elemento , Sexo, authorList.get(Regionid - 1)));
+        armasList.get(ArmaID - 1).addPersonaje(new Personaje(PersonajeID, NombrePersonaje, Numerodeestrellas, TipodeArma, Elemento , Sexo, regionList.get(Regionid - 1)));
 
     }
     br2.close();
@@ -87,47 +82,73 @@ public class PersonajeController {
   }
 
   /* Method to CREATE an Article in the database */
-  public void addArticle(Personaje article) {
+  public void addPersonaje(Personaje personaje) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    em.merge(article);
+    em.merge(personaje);
     em.getTransaction().commit();
     em.close();
   }
 
   /* Method to READ all Articles */
-  public void listArticles() {
+  public void listPersonajes() {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
     List<Personaje> result = em.createQuery("from Personaje", Personaje.class)
         .getResultList();
-    for (Personaje article : result) {
-      System.out.println(article.toString());
+    for (Personaje personaje : result) {
+      System.out.println(personaje.toString());
     }
     em.getTransaction().commit();
     em.close();
   }
 
   /* Method to UPDATE activity for an Article */
-  public void updateArticle(Integer articleId) {
+  public void updatePersonaje(Integer personajeId) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    Personaje article = (Personaje) em.find(Personaje.class, articleId);
-    em.merge(article);
+    Personaje personaje = (Personaje) em.find(Personaje.class, personajeId);
+    em.merge(personaje);
     em.getTransaction().commit();
     em.close();
   }
 
   /* Method to DELETE an Article from the records */
-  public void deleteArticle(Integer articleId) {
+  public void deletePersonaje(Integer personajeId) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    Personaje article = (Personaje) em.find(Personaje.class, articleId);
-    em.remove(article);
+    Personaje personaje = (Personaje) em.find(Personaje.class, personajeId);
+    em.remove(personaje);
     em.getTransaction().commit();
     em.close();
   }
 
+  public ArrayList<ArrayList<String>> readRegionesPersonajes (String regionesPersonajes) throws IOException {
 
+    BufferedReader br2 = new BufferedReader(new FileReader(regionesPersonajes));
+    String linea = "";
+
+    ArrayList<ArrayList<String>> resultado = new ArrayList<ArrayList<String>>();
+
+    String regionId;
+    String personajeId;
+
+
+
+    while ((linea = br2.readLine()) != null) {
+
+      ArrayList<String> line = new ArrayList<String>();
+      StringTokenizer str = new StringTokenizer(linea, ",");
+      regionId = str.nextToken();
+      personajeId = str.nextToken();
+
+      line.add(regionId);
+      line.add(personajeId);
+
+      resultado.add(line);
+    }
+    br2.close();
+    return resultado;
+  }
 }
 

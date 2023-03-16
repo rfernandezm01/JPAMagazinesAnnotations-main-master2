@@ -72,9 +72,10 @@ public class Main {
     //sessionObj = buildSessionFactory().openSession();
 
 
-    RegionController authorController = new RegionController(c, entityManagerFactory);
-    PersonajeController articleController = new PersonajeController(c, entityManagerFactory);
-    ArmasController magazineController = new ArmasController(c, entityManagerFactory);
+    RegionController regionController = new RegionController(c, entityManagerFactory);
+    PersonajeController personajeController = new PersonajeController(c, entityManagerFactory);
+    ArmasController armasController = new ArmasController(c, entityManagerFactory);
+    PersonajeController personajesController = new PersonajeController(c, entityManagerFactory);
 
     Menu menu = new Menu();
     int opcio;
@@ -87,54 +88,76 @@ public class Main {
         System.out.println("1!!");
         try {
 
-          // authorController.printAutors(authorController.readAuthorsFile("src/main/resources/autors.txt"));
+          // regionController.printAutors(regionController.readAuthorsFile("src/main/resources/autors.txt"));
         //
 
          // for (Author a : authors) {
-         //   authorController.addAuthor(a);
+         //   regionController.addAuthor(a);
          // }
 
-          // magazineController.printMagazines(magazineController.readMagazinesFile("src/main/resources/revistes.txt"));
-          // magazineController.printMagazines();
+          // armasController.printMagazines(armasController.readMagazinesFile("src/main/resources/revistes.txt"));
+          // armasController.printMagazines();
 
-          List<Region> regions = authorController.readAuthorsFile("src/main/resources/Regiónes.csv");
-          List<Personaje> personajes = articleController.readArticlesFile("src/main/resources/personajes.csv", "src/main/resources/Regiónes.csv", "src/main/resources/Armas.csv");
-          List<Armas> armas = magazineController.readMagazinesFile("src/main/resources/Armas.csv");
+          List<Region> regions = regionController.readRegionesFile("src/main/resources/Regiónes.csv");
+          List<Personaje> personajes = personajeController.readPersonajesFile("src/main/resources/personajes.csv", "src/main/resources/Regiónes.csv", "src/main/resources/Armas.csv");
+          List<Armas> armas = armasController.readArmasFile("src/main/resources/Armas.csv");
+          ArrayList<ArrayList<String>> regionesPersonajes = personajesController.readRegionesPersonajes("src/main/resources/RegionesPersonajes.csv");
 
           System.out.println("Revistes llegides des del fitxer");
           for (int i = 0; i < armas.size(); i++) {
             System.out.println(armas.get(i).toString()+"\n");
-            for (int j = 0; j < armas.get(i).getPersonaje().getPersonajeID(1); j++) {
-              Region author = armas.get(i).getPersonaje().getRegion();
-              authorController.addAuthor(author);
+            for (int j = 0; j < armas.get(i).getPersonaje().getPersonajeID(); j++) {
+              Region region = armas.get(i).getPersonaje().getRegion();
 
               System.out.println("La Región:");
-              System.out.println(author);
+              System.out.println(region);
 
-              Personaje personaje = armas.get(i).getPersonaje().region.getPersonaje();
-              personaje.setRegion(author);
+              //Personaje personaje = armas.get(i).getPersonaje().region.getPersonajes();
+              //personaje.setRegion(region);
 
-              System.out.println("Personajes:");
-              System.out.println(personaje);
+              //System.out.println("Personajes:");
+              //System.out.println(personaje);
 
-              articleController.addArticle(personaje);
+              //personajeController.addArticle(personaje);
+
+              for (ArrayList<String> regionPersonaje : regionesPersonajes) {
+                if (Integer.parseInt(regionPersonaje.get(0)) == region.getRegionid()) {
+
+                  // Este es el ID del presonaje
+                  // Este personaje hay que meterlo a la lista de personajes
+                  regionPersonaje.get(1);
+                //  region.getPersonajes().add();
+
+                  // Buscamos el personaje que tiene ese ID
+                  for (Personaje p : personajes) {
+                    if (p.getPersonajeID() == Integer.parseInt(regionPersonaje.get(1))) {
+                      region.getPersonajes().add(p);
+                    }
+                  }
+                }
+
+
+              }
+
+              regionController.addRegion(region);
+
             }
 
-            magazineController.addMagazine(armas.get(i));
+            armasController.addArma(armas.get(i));
           }
 
 /*
           for (Magazine m : magazines) {
             System.out.println(m);
-            magazineController.addMagazine(m);
+            armasController.addMagazine(m);
           }
 
           for (Author a : authors) {
-            authorController.addAuthor(a);
+            regionController.addAuthor(a);
           }
 
           for (Article ar : articles) {
-            articleController.addArticle(ar);
+            personajeController.addArticle(ar);
           }
 */
         } catch (NumberFormatException | IOException e) {

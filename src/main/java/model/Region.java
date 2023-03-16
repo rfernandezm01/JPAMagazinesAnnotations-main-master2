@@ -2,6 +2,7 @@ package model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Access(AccessType.FIELD)
@@ -33,7 +34,7 @@ public class Region implements Serializable {
   }
   @OneToMany(cascade = CascadeType.ALL)
   @JoinColumn(name = "RegionID", referencedColumnName = "RegionID")
-  public Personaje personaje;
+  List<Personaje> personajes;
 
   public Region(int id, String name, String country, String year, boolean active) {
 
@@ -84,23 +85,33 @@ public class Region implements Serializable {
   public void setMundo(String mundo) {
     this.Mundo = mundo;
   }
-  public Personaje getPersonaje() {
-    return personaje;
+  public List<Personaje> getPersonajes() {
+    return personajes;
   }
 
   //public List<Personaje> getArticles() {
   //return articles;
   //}
 
-  public void setPersonaje(Personaje personaje) {
-    this.personaje = personaje;
+  public void setPersonajes(List<Personaje> personajes) {
+    this.personajes = personajes;
   }
 
 
   @Override
   public String toString() {
-    return "Region [RegionID=" + Regionid + ", Nomregion=" + Nomregion + ", Habitantes=" + Habitantes
-        + ", Elemento=" + Elemento + ", Nombrearconte=" + Nombrearconte + ", Mundo=" + Mundo +", Personaje=" + personaje.toString() + "]";
+    String result =  "Region [RegionID=" + Regionid + ", Nomregion=" + Nomregion + ", Habitantes=" + Habitantes
+        + ", Elemento=" + Elemento + ", Nombrearconte=" + Nombrearconte + ", Mundo=" + Mundo +", Personajes= [ ";
+
+
+    for (Personaje p : personajes)
+    {
+      result += p.toString();
+    }
+
+    result += " ]";
+    return result;
+
   }
 
 
