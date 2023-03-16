@@ -23,7 +23,7 @@ public class Personaje implements Serializable{
   String Sexo;
 
   public Personaje(int PersonajeID, String NombrePersonaje, int TipodeArma,
-                   String Elemento, String Numerodeestrellas, String Sexo) {
+                   String Elemento, String Numerodeestrellas, String Sexo, Region region) {
     super();
     this.PersonajeID = PersonajeID;
     this.NombrePersonaje = NombrePersonaje;
