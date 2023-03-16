@@ -11,6 +11,8 @@ import java.util.*;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import static java.lang.Integer.parseInt;
+
 public class RegionController {
 //Author
   private Connection connection;
@@ -34,9 +36,9 @@ public class RegionController {
     String linea = "";
     while ((linea = br.readLine()) != null) {
       StringTokenizer str = new StringTokenizer(linea, ",");
-      Regionid = Integer.parseInt(str.nextToken());
+      Regionid = parseInt(str.nextToken());
       Nomregion = str.nextToken();
-      Habitantes = Integer.parseInt(str.nextToken());
+      Habitantes = parseInt(str.nextToken());
       Elemento = str.nextToken();
       Nombrearconte = str.nextToken();
       Mundo = str.nextToken();

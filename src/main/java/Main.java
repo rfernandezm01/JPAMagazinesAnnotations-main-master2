@@ -96,7 +96,8 @@ public class Main {
          // }
 
           // armasController.printMagazines(armasController.readMagazinesFile("src/main/resources/revistes.txt"));
-          // armasController.printMagazines();
+          // armasController.p1
+          // rintMagazines();
 
           List<Region> regions = regionController.readRegionesFile("src/main/resources/Regiónes.csv");
           List<Personaje> personajes = personajeController.readPersonajesFile("src/main/resources/personajes.csv", "src/main/resources/Regiónes.csv", "src/main/resources/Armas.csv");
